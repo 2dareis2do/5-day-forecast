@@ -2,6 +2,7 @@
 import React from 'react';
 import WeatherStore from '../stores/WeatherStore.js';
 import { getForecast } from '../actions/WeatherServerActions.js';
+import { getForecast2 } from '../actions/WeatherServerActions.js';
 import { getForecastResponse } from '../actions/WeatherServerActions.js';
 
 const itemStyle = {
@@ -73,7 +74,7 @@ export default class Weather extends React.Component {
             console.log('component did  mount');
     // setTimeout(WeatherStore.getWeather(this._onChange), 4000);
         // getForecast();
-        getForecast();
+        getForecast2();
         WeatherStore.getWeather(this._onChange);
         // console.log('WeatherStore.getWeather() did mount', WeatherStore.getWeather())
         // let item = WeatherStore.getWeather();
