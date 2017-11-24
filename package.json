@@ -1,5 +1,6 @@
 {
   "name": "5-day-weather-forecast",
+  "homepage" : "https://github.com/2dareis2do/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

@@ -1,14 +1,16 @@
 import React from 'react';
 import WeatherStore from '../stores/WeatherStore.js';
 import { getForecast } from '../actions/WeatherServerActions.js';
+import Loading from './Loading.js'
 
 const itemStyle = {
   display: 'inline-block',
   float: 'left',
   listStyleType: 'none',
-  padding: 0,
+  padding: '1rem',
   margin: 0,
-  paddingBottom:'1rem'
+  paddingBottom:'1rem',
+  minWidth: '12.5%'
 }
 
 const ulStyle = {
@@ -16,18 +18,12 @@ const ulStyle = {
   float: 'left',
   listStyleType: 'none',
   padding: 0,
-  margin: 0
+  margin: 0,
+  width: '100%'
 }
 
-const divStyle = {
-  height: '100px',
-  width: '20%',
-  textAlign: 'center',
-  padding: '1em',
-  margin: '0 auto 1em',
-  display: 'inline-block',
-  verticalAlign: 'top'
-}
+const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+// const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
 export default class Weather extends React.Component {
 
@@ -52,13 +48,39 @@ export default class Weather extends React.Component {
   }
 
   _onChange() {
-
     let item = WeatherStore.getWeather();
     this.setState({
       list:item.list,
       city:item.city,
       loading: item.loading
     });
+  }
+
+  _getDay(string) {
+    let newString = string.replace(/ /g,"T");
+    let date = new Date(newString);
+    // let month = months[date.getMonth()];
+    // let year = date.getFullYear();
+    let day = days[date.getDay()];
+    // let localDate = date.toLocaleDateString();
+    // let combined = day + ' ' + localDate;
+    return day;
+  }
+
+  _getDate(string) {
+    let newString = string.replace(/ /g,"T");
+    let date = new Date(newString);
+    // let month = months[date.getMonth()];
+    // let year = date.getFullYear();
+    let localDate = date.toLocaleDateString();
+    return localDate;
+  }
+
+  _getTime(string) {
+    let newString = string.replace(/ /g,"T");
+    let date = new Date(newString);
+    let local = date.toLocaleTimeString();
+    return local;
   }
 
   render() {
@@ -70,14 +92,21 @@ export default class Weather extends React.Component {
 
         <h1 className="title">5 day weather forecast:  {this.state.city.name}, {this.state.city.country} </h1>
           {this.props.children}
-
           <div className="weather-items">
+                        
 
            {this.state.list.map(function(listItem, i) {
               return (
                 <div key={listItem.dt + i} className="item" style={itemStyle} >
+                  
+                  <p>{this._getDay(listItem.dt_txt)}</p>
+                  <p>{this._getDate(listItem.dt_txt)}</p>
+                  <p>{this._getTime(listItem.dt_txt)}</p>
 
-                <span>{listItem.dt_txt}</span>
+                  <p>{
+                  listItem.main.temp
+                  }
+                  &#8451;</p>
 
                   {listItem.weather.map(function(weatherItem) {
                     let iconUrl = "http://openweathermap.org/img/w/" + weatherItem.icon + ".png";
@@ -89,14 +118,9 @@ export default class Weather extends React.Component {
                     );
                   })}
 
-                  <h3 className="temp">{
-                  listItem.main.temp
-                  }
-                  &#8451;</h3>
-
                 </div>
               );
-            })}
+            }, this)}
 
           </div>
       </div>
@@ -106,29 +130,7 @@ export default class Weather extends React.Component {
 
     else if (this.state.loading === true){
       return (
-        <div style={divStyle} >
-          <div>loading...</div>
-          <div className="loader loader--style8" >
-            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-               width="24px" height="30px" viewBox="0 0 24 30">
-              <rect x="0" y="10" width="4" height="10" fill="#333" opacity="0.2">
-                <animate attributeName="opacity" attributeType="XML" values="0.2; 1; .2" begin="0s" dur="0.6s" repeatCount="indefinite" />
-                <animate attributeName="height" attributeType="XML" values="10; 20; 10" begin="0s" dur="0.6s" repeatCount="indefinite" />
-                <animate attributeName="y" attributeType="XML" values="10; 5; 10" begin="0s" dur="0.6s" repeatCount="indefinite" />
-              </rect>
-              <rect x="8" y="10" width="4" height="10" fill="#333"  opacity="0.2">
-                <animate attributeName="opacity" attributeType="XML" values="0.2; 1; .2" begin="0.15s" dur="0.6s" repeatCount="indefinite" />
-                <animate attributeName="height" attributeType="XML" values="10; 20; 10" begin="0.15s" dur="0.6s" repeatCount="indefinite" />
-                <animate attributeName="y" attributeType="XML" values="10; 5; 10" begin="0.15s" dur="0.6s" repeatCount="indefinite" />
-              </rect>
-              <rect x="16" y="10" width="4" height="10" fill="#333"  opacity="0.2">
-                <animate attributeName="opacity" attributeType="XML" values="0.2; 1; .2" begin="0.3s" dur="0.6s" repeatCount="indefinite" />
-                <animate attributeName="height" attributeType="XML" values="10; 20; 10" begin="0.3s" dur="0.6s" repeatCount="indefinite" />
-                <animate attributeName="y" attributeType="XML" values="10; 5; 10" begin="0.3s" dur="0.6s" repeatCount="indefinite" />
-              </rect>
-            </svg>
-          </div>
-        </div>
+        <Loading></Loading>
         )
     }
 
