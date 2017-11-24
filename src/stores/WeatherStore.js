@@ -31,7 +31,6 @@ class WeatherStoreClass extends EventEmitter {
   }
 
   getWeather() {
-    console.log('getweather inside');
     return _store;
   }
 
@@ -59,7 +58,7 @@ AppDispatcher.register((payload) => {
 
     updateStore(action.response.data);
     WeatherStore.emit(CHANGE_EVENT);
-    console.log('_store', _store);
+    // console.log('_store', _store);
 
       break;
 
