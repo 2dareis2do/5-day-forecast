@@ -59,19 +59,13 @@ export default class Weather extends React.Component {
   _getDay(string) {
     let newString = string.replace(/ /g,"T");
     let date = new Date(newString);
-    // let month = months[date.getMonth()];
-    // let year = date.getFullYear();
     let day = days[date.getDay()];
-    // let localDate = date.toLocaleDateString();
-    // let combined = day + ' ' + localDate;
     return day;
   }
 
   _getDate(string) {
     let newString = string.replace(/ /g,"T");
     let date = new Date(newString);
-    // let month = months[date.getMonth()];
-    // let year = date.getFullYear();
     let localDate = date.toLocaleDateString();
     return localDate;
   }
@@ -131,7 +125,7 @@ export default class Weather extends React.Component {
     else if (this.state.loading === true){
       return (
         <Loading></Loading>
-        )
+      )
     }
 
   }
