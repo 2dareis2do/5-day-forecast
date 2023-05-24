@@ -6,6 +6,10 @@ This is a 5 day weather forecaster that I have put together using javascript.
 
 I have used React with a Flux implementation.
 
+To run with node simply enter:
+
+`npm run build` after `npm install`
+
 ## Static Version
 
 For ease of deployment, I have created a static version of this which comes bundled with all dependencies. Simply navigate to /build/index.html
